@@ -6,6 +6,7 @@ var etlDimSupplierRouter = require('../src/routers/v1/etl-dim-supplier-router');
 var etlDimUnitRouter = require('../src/routers/v1/etl-dim-unit-router');
 var etlFactMonitoringEvent = require('../src/routers/v1/etl-fact-monitoring-event-router');
 var etlFactSalesContract = require('../src/routers/v1/etl-fact-sales-contract-router');
+var etlDim = require('../src/routers/v1/etl-dim-router');
 
 module.exports = function (server) {
     etlFactPuchasingRouter().applyRoutes(server, "/etl/purchasing");
@@ -16,4 +17,5 @@ module.exports = function (server) {
     etlDimUnitRouter().applyRoutes(server, "/etl/dim-unit");
     etlFactMonitoringEvent().applyRoutes(server, "/etl/fact-monitoring-event");
     etlFactSalesContract().applyRoutes(server, "/etl/fact-sales-contract");
+    etlDim().applyRoutes(server, "/etl/dim");
 };
