@@ -1,6 +1,7 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 var FactMonitoringEvent = require("dl-module").etl.factMonitoringEvent;
+var FactDailyOperations = require("dl-module").etl.factDailyOperations;
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
 
@@ -32,11 +33,25 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance = new FactMonitoringEvent(db, {
+                    var instance1 = new FactMonitoringEvent(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance.run();
+                    instance1.run();
+
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance2 = new FactDailyOperations(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance2.run();
 
                 });
             });

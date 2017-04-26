@@ -1,6 +1,9 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
-var FactSalesContract = require("dl-module").etl.factSalesContract;
+var FactProductionOrder = require("dl-module").etl.factProductionOrder;
+var FactFinishingPrintingSalesContract = require("dl-module").etl.factFinishingPrintingSalesContract;
+var FactSpinningSalesContract = require("dl-module").etl.factSpinningSalesContract;
+var FactWeavingSalesContract = require("dl-module").etl.factWeavingSalesContract;
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
 
@@ -32,11 +35,53 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance = new FactSalesContract(db, {
+                    var instance1 = new FactProductionOrder(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance.run();
+                    instance1.run();
+
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance2 = new FactFinishingPrintingSalesContract(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance2.run();
+
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance3 = new FactSpinningSalesContract(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance3.run();
+
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance4 = new FactWeavingSalesContract(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance4.run();
 
                 });
             });
