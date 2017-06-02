@@ -1,13 +1,13 @@
-var etlFactPuchasingRouter = require('../src/routers/v1/etl-fact-purchasing-router');
-var etlFactTotalHutangRouter = require('../src/routers/v1/etl-fact-total-hutang-router');
-var etlFactMonitoringEvent = require('../src/routers/v1/etl-fact-monitoring-event-router');
-var etlFactSalesContract = require('../src/routers/v1/etl-fact-sales-contract-router');
 var etlDim = require('../src/routers/v1/etl-dim-router');
+var etlFactInventoryRouter = require('../src/routers/v1/etl-fact-inventory-router');
+var etlFactProductionRouter = require('../src/routers/v1/etl-fact-production-router');
+var etlFactPuchasingRouter = require('../src/routers/v1/etl-fact-purchasing-router');
+var etlFactSalesRouter = require('../src/routers/v1/etl-fact-sales-router');
 
 module.exports = function (server) {
-    etlFactPuchasingRouter().applyRoutes(server, "/etl/purchasing");
-    etlFactTotalHutangRouter().applyRoutes(server, "/etl/total-hutang");
-    etlFactMonitoringEvent().applyRoutes(server, "/etl/fact-monitoring-event");
-    etlFactSalesContract().applyRoutes(server, "/etl/fact-sales-contract");
     etlDim().applyRoutes(server, "/etl/dim");
+    etlFactInventoryRouter().applyRoutes(server, "/etl/inventory");
+    etlFactProductionRouter().applyRoutes(server, "/etl/production");
+    etlFactPuchasingRouter().applyRoutes(server, "/etl/purchasing");
+    etlFactSalesRouter().applyRoutes(server, "/etl/sales");
 };
