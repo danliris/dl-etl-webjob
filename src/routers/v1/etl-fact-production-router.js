@@ -1,9 +1,12 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
+
+var FactMonitoringEvent = require("dl-module").etl.factMonitoringEvent;
+var FactDailyOperations = require("dl-module").etl.factDailyOperations;
+var FactFabricQualityControl = require("dl-module").etl.factFabricQualityControl;
+var FactProductionOrderStatus = require("dl-module").etl.factProductionOrderStatus;
 var FactProductionOrder = require("dl-module").etl.factProductionOrder;
-var FactFinishingPrintingSalesContract = require("dl-module").etl.factFinishingPrintingSalesContract;
-var FactSpinningSalesContract = require("dl-module").etl.factSpinningSalesContract;
-var FactWeavingSalesContract = require("dl-module").etl.factWeavingSalesContract;
+
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
 
@@ -35,12 +38,14 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance1 = new FactProductionOrder(db, {
+                    var instance1 = new FactMonitoringEvent(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance1.run();
-
+                    instance1.run()
+                        .catch((e) => {
+                            done(e);
+                        });
                 });
             });
 
@@ -49,12 +54,14 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance2 = new FactFinishingPrintingSalesContract(db, {
+                    var instance2 = new FactDailyOperations(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance2.run();
-
+                    instance2.run()
+                        .catch((e) => {
+                            done(e);
+                        });
                 });
             });
 
@@ -63,12 +70,14 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance3 = new FactSpinningSalesContract(db, {
+                    var instance3 = new FactFabricQualityControl(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance3.run();
-
+                    instance3.run()
+                        .catch((e) => {
+                            done(e);
+                        });
                 });
             });
 
@@ -77,12 +86,30 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance4 = new FactWeavingSalesContract(db, {
+                    var instance4 = new FactProductionOrderStatus(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance4.run();
+                    instance4.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
 
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance5 = new FactProductionOrder(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance5.run()
+                        .catch((e) => {
+                            done(e);
+                        });
                 });
             });
     });
