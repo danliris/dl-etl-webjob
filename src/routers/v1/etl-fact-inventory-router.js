@@ -1,6 +1,9 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
-var FactSalesContract = require("dl-module").etl.factSalesContract;
+
+var FactInventoryMovement = require("dl-module").etl.factInventoryMovement;
+var FactInventorySummary = require("dl-module").etl.factInventorySummary;
+
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
 
@@ -32,12 +35,30 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance = new FactSalesContract(db, {
+                    var instance1 = new FactInventoryMovement(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance.run();
+                    instance1.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
 
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance2 = new FactInventorySummary(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance2.run()
+                        .catch((e) => {
+                            done(e);
+                        });
                 });
             });
     });
