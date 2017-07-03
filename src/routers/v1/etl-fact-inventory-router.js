@@ -1,8 +1,8 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
-var FactPembelian = require("dl-module").etl.factPembelian;
-var FactTotalHutang = require("dl-module").etl.factTotalHutang;
+var FactInventoryMovement = require("dl-module").etl.factInventoryMovement;
+var FactInventorySummary = require("dl-module").etl.factInventorySummary;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -35,7 +35,7 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance1 = new FactPembelian(db, {
+                    var instance1 = new FactInventoryMovement(db, {
                         username: "unit-test"
                     }, sql);
 
@@ -51,7 +51,7 @@ function getRouter() {
                 var db = result[0];
                 var sql = result[1];
                 db.get().then((db) => {
-                    var instance2 = new FactTotalHutang(db, {
+                    var instance2 = new FactInventorySummary(db, {
                         username: "unit-test"
                     }, sql);
 
