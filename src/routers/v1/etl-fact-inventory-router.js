@@ -1,8 +1,8 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
-var FactInventoryMovement = require("dl-module").etl.factInventoryMovement;
-var FactInventorySummary = require("dl-module").etl.factInventorySummary;
+var FactInventoryMovement = require("dl-module").etl.inventory.factInventoryMovement;
+var FactInventorySummary = require("dl-module").etl.inventory.factInventorySummary;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
