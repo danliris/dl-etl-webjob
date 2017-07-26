@@ -1,11 +1,11 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
-var FactMonitoringEvent = require("dl-module").etl.factMonitoringEvent;
-var FactDailyOperations = require("dl-module").etl.factDailyOperations;
-var FactFabricQualityControl = require("dl-module").etl.factFabricQualityControl;
-var FactProductionOrderStatus = require("dl-module").etl.factProductionOrderStatus;
-var FactProductionOrder = require("dl-module").etl.factProductionOrder;
+var FactMonitoringEvent = require("dl-module").etl.production.factMonitoringEvent;
+var FactDailyOperations = require("dl-module").etl.production.factDailyOperations;
+var FactFabricQualityControl = require("dl-module").etl.production.factFabricQualityControl;
+var FactProductionOrderStatus = require("dl-module").etl.production.factProductionOrderStatus;
+var FactProductionOrder = require("dl-module").etl.production.factProductionOrder;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
