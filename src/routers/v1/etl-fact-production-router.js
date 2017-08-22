@@ -1,10 +1,11 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
+var FactKanban = require("dl-module").etl.production.factKanban;
 var FactMonitoringEvent = require("dl-module").etl.production.factMonitoringEvent;
 var FactDailyOperations = require("dl-module").etl.production.factDailyOperations;
 var FactFabricQualityControl = require("dl-module").etl.production.factFabricQualityControl;
-var FactProductionOrderStatus = require("dl-module").etl.production.factProductionOrderStatus;
+var FactProductionOrderStatus = require("dl-module").etl.sales.factProductionOrderStatus;
 var FactProductionOrder = require("dl-module").etl.production.factProductionOrder;
 
 var dbConnect = require("../../db");
@@ -107,6 +108,22 @@ function getRouter() {
                     }, sql);
 
                     instance5.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance6 = new FactKanban(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance6.run()
                         .catch((e) => {
                             done(e);
                         });

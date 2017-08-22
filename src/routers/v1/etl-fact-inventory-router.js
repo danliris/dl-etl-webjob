@@ -3,6 +3,8 @@ var messageSender = require("../../message-sender");
 
 var FactInventoryMovement = require("dl-module").etl.inventory.factInventoryMovement;
 var FactInventorySummary = require("dl-module").etl.inventory.factInventorySummary;
+var FactShipmentDocument = require("dl-module").etl.inventory.factShipmentDocument;
+var FactPackingReceipt = require("dl-module").etl.inventory.factPackingReceipt;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -56,6 +58,38 @@ function getRouter() {
                     }, sql);
 
                     instance2.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance3 = new FactShipmentDocument(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance3.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance4 = new FactPackingReceipt(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance3.run()
                         .catch((e) => {
                             done(e);
                         });
