@@ -1,9 +1,9 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
-var FactFinishingPrintingSalesContract = require("dl-module").etl.factFinishingPrintingSalesContract;
-var FactSpinningSalesContract = require("dl-module").etl.factSpinningSalesContract;
-var FactWeavingSalesContract = require("dl-module").etl.factWeavingSalesContract;
+var FactFinishingPrintingSalesContract = require("dl-module").etl.sales.factFinishingPrintingSalesContract;
+var FactSpinningSalesContract = require("dl-module").etl.sales.factSpinningSalesContract;
+var FactWeavingSalesContract = require("dl-module").etl.sales.factWeavingSalesContract;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");

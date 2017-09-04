@@ -1,8 +1,8 @@
 var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
-var FactPembelian = require("dl-module").etl.factPembelian;
-var FactTotalHutang = require("dl-module").etl.factTotalHutang;
+var FactPembelian = require("dl-module").etl.purchasing.factPembelian;
+var FactTotalHutang = require("dl-module").etl.purchasing.factTotalHutang;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
