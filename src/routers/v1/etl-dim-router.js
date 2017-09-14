@@ -11,6 +11,8 @@ var DimOrderType = require("dl-module").etl.dim.dimOrderType;
 var DimProcessType = require("dl-module").etl.dim.dimProcessType;
 var DimStorage = require("dl-module").etl.dim.dimStorage;
 var DimProduct = require("dl-module").etl.dim.dimProduct;
+var DimContact = require("dl-module").etl.dim.dimContact;
+var DimCompany = require("dl-module").etl.dim.dimCompany;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -192,6 +194,38 @@ function getRouter() {
                     }, sql);
 
                     instance10.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance11 = new DimContact(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance11.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance12 = new DimCompany(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance12.run()
                         .catch((e) => {
                             done(e);
                         });
