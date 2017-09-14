@@ -12,7 +12,7 @@ var DimProcessType = require("dl-module").etl.dim.dimProcessType;
 var DimStorage = require("dl-module").etl.dim.dimStorage;
 var DimProduct = require("dl-module").etl.dim.dimProduct;
 var DimContact = require("dl-module").etl.dim.dimContact;
-var DimCompany = require("dl-moduile").etl.dim.dimCompany;
+var DimCompany = require("dl-module").etl.dim.dimCompany;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
