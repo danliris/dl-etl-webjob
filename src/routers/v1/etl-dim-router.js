@@ -13,6 +13,7 @@ var DimStorage = require("dl-module").etl.dim.dimStorage;
 var DimProduct = require("dl-module").etl.dim.dimProduct;
 var DimContact = require("dl-module").etl.dim.dimContact;
 var DimCompany = require("dl-module").etl.dim.dimCompany;
+var DimDurationEstimation = require("dl-module").etl.dim.dimDurationEstimation;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -226,6 +227,22 @@ function getRouter() {
                     }, sql);
 
                     instance12.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance13 = new DimDurationEstimation(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance13.run()
                         .catch((e) => {
                             done(e);
                         });
