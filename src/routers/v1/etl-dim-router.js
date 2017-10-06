@@ -2,6 +2,7 @@ var Router = require("restify-router").Router;
 var messageSender = require("../../message-sender");
 
 var DimUnit = require("dl-module").etl.dim.dimUnit;
+var DimStaff = require("dl-module").etl.dim.dimStaff;
 var DimDivision = require("dl-module").etl.dim.dimDivision;
 var DimSupplier = require("dl-module").etl.dim.dimSupplier;
 var DimCategory = require("dl-module").etl.dim.dimCategory;
@@ -13,6 +14,7 @@ var DimStorage = require("dl-module").etl.dim.dimStorage;
 var DimProduct = require("dl-module").etl.dim.dimProduct;
 var DimContact = require("dl-module").etl.dim.dimContact;
 var DimCompany = require("dl-module").etl.dim.dimCompany;
+var DimStaff = require("dl-module").etl.dim.dimCompany;
 var DimDurationEstimation = require("dl-module").etl.dim.dimDurationEstimation;
 
 var dbConnect = require("../../db");
@@ -243,6 +245,22 @@ function getRouter() {
                     }, sql);
 
                     instance13.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance14 = new DimStaff(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance14.run()
                         .catch((e) => {
                             done(e);
                         });
