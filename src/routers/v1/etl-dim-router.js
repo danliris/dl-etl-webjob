@@ -14,6 +14,7 @@ var DimProduct = require("dl-module").etl.dim.dimProduct;
 var DimContact = require("dl-module").etl.dim.dimContact;
 var DimCompany = require("dl-module").etl.dim.dimCompany;
 var DimDurationEstimation = require("dl-module").etl.dim.dimDurationEstimation;
+var DimBudget = require("dl-module").etl.dim.dimBudget;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -243,6 +244,22 @@ function getRouter() {
                     }, sql);
 
                     instance13.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance14 = new DimBudget(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance14.run()
                         .catch((e) => {
                             done(e);
                         });
