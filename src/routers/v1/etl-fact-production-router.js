@@ -7,6 +7,8 @@ var FactDailyOperations = require("dl-module").etl.production.factDailyOperation
 var FactFabricQualityControl = require("dl-module").etl.production.factFabricQualityControl;
 var FactProductionOrderStatus = require("dl-module").etl.sales.factProductionOrderStatus;
 var FactProductionOrder = require("dl-module").etl.production.factProductionOrder;
+var FactInspectionLotColor = require("dl-module").etl.production.factInspectionLotColor;
+
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -124,6 +126,22 @@ function getRouter() {
                     }, sql);
 
                     instance6.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance7 = new FactInspectionLotColor(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance7.run()
                         .catch((e) => {
                             done(e);
                         });
