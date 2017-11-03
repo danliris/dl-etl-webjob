@@ -44,38 +44,55 @@ function getRouter() {
                         username: "unit-test"
                     }, sql);
 
-                    instance1.run();
-
-                });
-            });
-
-        Promise.all([dbConnect, sqlConnect])
-            .then((result) => {
-                var db = result[0];
-                var sql = result[1];
-                db.get().then((db) => {
                     var instance2 = new FactSpinningSalesContract(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance2.run();
-
-                });
-            });
-
-        Promise.all([dbConnect, sqlConnect])
-            .then((result) => {
-                var db = result[0];
-                var sql = result[1];
-                db.get().then((db) => {
                     var instance3 = new FactWeavingSalesContract(db, {
                         username: "unit-test"
                     }, sql);
 
-                    instance3.run();
-
+                    instance1.run()
+                        .then(() => {})
+                        .catch(() => {})
+                        .then(() => { /* Finally */
+                            instance2.run()
+                                .then(() => {})
+                                .catch(() => {})
+                                .then(() => { /* Finally */
+                                    instance3.run();
+                                });
+                        });
                 });
             });
+
+        // Promise.all([dbConnect, sqlConnect])
+        //     .then((result) => {
+        //         var db = result[0];
+        //         var sql = result[1];
+        //         db.get().then((db) => {
+        //             var instance2 = new FactSpinningSalesContract(db, {
+        //                 username: "unit-test"
+        //             }, sql);
+
+        //             instance2.run();
+
+        //         });
+        //     });
+
+        // Promise.all([dbConnect, sqlConnect])
+        //     .then((result) => {
+        //         var db = result[0];
+        //         var sql = result[1];
+        //         db.get().then((db) => {
+        //             var instance3 = new FactWeavingSalesContract(db, {
+        //                 username: "unit-test"
+        //             }, sql);
+
+        //             instance3.run();
+
+        //         });
+        //     });
 
         Promise.all([dbConnect, sqlConnect])
             .then((result) => {
