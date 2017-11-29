@@ -158,7 +158,7 @@ function getRouter() {
                         username: "unit-test"
                     }, sql);
 
-                    instance7.run()
+                    instance8.run()
                         .catch((e) => {
                             done(e);
                         });
