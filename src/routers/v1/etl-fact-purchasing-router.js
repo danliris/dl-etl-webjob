@@ -3,7 +3,10 @@ var messageSender = require("../../message-sender");
 
 var FactPembelian = require("dl-module").etl.purchasing.factPembelian;
 var FactTotalHutang = require("dl-module").etl.purchasing.factTotalHutang;
+
+//Garment
 var FactPembelianGarment = require("dl-module").etl.garment.factGarmentPurchasing;
+var FactTotalHutangGarment = require("dl-module").etl.garment.purchasing.factTotalHutangGarment;
 
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
@@ -73,6 +76,22 @@ function getRouter() {
                     }, sql);
 
                     instance3.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var instance4 = new FactTotalHutangGarment(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    instance4.run()
                         .catch((e) => {
                             done(e);
                         });
