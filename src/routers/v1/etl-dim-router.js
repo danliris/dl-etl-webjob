@@ -18,6 +18,9 @@ var DimStaff = require("dl-module").etl.dim.dimCompany;
 var DimDurationEstimation = require("dl-module").etl.dim.dimDurationEstimation;
 var DimBudget = require("dl-module").etl.dim.dimBudget;
 
+//garment
+var DimGarmentSupplier = require("dl-module").etl.garment.dim.dimGarmentSupplier;
+
 var dbConnect = require("../../db");
 var sqlConnect = require("../../sql-db");
 
@@ -262,6 +265,22 @@ function getRouter() {
                     }, sql);
 
                     instance14.run()
+                        .catch((e) => {
+                            done(e);
+                        });
+                });
+            });
+
+        Promise.all([dbConnect, sqlConnect])
+            .then((result) => {
+                var db = result[0];
+                var sql = result[1];
+                db.get().then((db) => {
+                    var dimGarmentSupplier = new DimGarmentSupplier(db, {
+                        username: "unit-test"
+                    }, sql);
+
+                    dimGarmentSupplier.run()
                         .catch((e) => {
                             done(e);
                         });
